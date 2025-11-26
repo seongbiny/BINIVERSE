@@ -1,7 +1,7 @@
 {
-  "buildCommand": "yarn build",
+  "buildCommand": "pnpm build",
   "outputDirectory": "dist",
-  "installCommand": "yarn install",
+  "installCommand": "pnpm install",
   "rewrites": [
     {
       "source": "/game/bini-puzzle/:path*",

@@ -3,12 +3,13 @@ import './App.css';
 import { useAuthStore } from './stores/authStore';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import SignInPage from './pages/SignInPage';
-import ProtectedRoute from './pages/ProtectedRoute';
+// import ProtectedRoute from './pages/ProtectedRoute';
 import MainPage from './pages/MainPage';
 import AuthCallback from './pages/AuthCallback';
 import { supabase } from './lib/supabaseClient';
 import RankingPage from './pages/RankingPage';
 import SplashPage from './pages/SplashPage';
+import GamePage from './pages/GamePage';
 
 function App() {
   const { session, setSession } = useAuthStore();
@@ -45,6 +46,7 @@ function App() {
     });
     return () => subscription.unsubscribe();
   }, [setSession]);
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="App w-[393px] h-screen max-h-screen overflow-hidden">
@@ -58,16 +60,11 @@ function App() {
 
           <Route path="/auth/callback" element={<AuthCallback />} />
 
-          <Route
-            path="/main"
-            element={
-              <ProtectedRoute>
-                <MainPage />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/main" element={<MainPage />} />
 
           <Route path="/ranking" element={<RankingPage />} />
+
+          <Route path="/game/:gameName" element={<GamePage />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
