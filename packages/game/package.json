@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "cd bini-puzzle && yarn build && cd ../flappy-plane && yarn build"
+    "build": "cd bini-puzzle && pnpm build && cd ../flappy-plane && pnpm build"
   },
   "devDependencies": {
     "typescript": "~5.7.2",

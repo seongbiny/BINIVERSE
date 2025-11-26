@@ -3,8 +3,13 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [],
+  server: {
+    port: 5003,
+    cors: true,
+    strictPort: true, // 포트 충돌 시 에러
+  },
   assetsInclude: ['**/*.otf', '**/*.ttf', '**/*.json'],
-  base: '/game/typo-trap/',
+  base: process.env.NODE_ENV === 'production' ? '/game/typo-trap/' : '/',
   build: {
     assetsInlineLimit: 0,
     outDir: resolve(__dirname, '../../../dist/game/typo-trap'),
