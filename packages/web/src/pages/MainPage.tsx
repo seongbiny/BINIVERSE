@@ -1,10 +1,10 @@
-// import { useAuthStore } from '../stores/authStore';
-// import Header from '../components/Header';
+import { useAuthStore } from '../stores/authStore';
+import Header from '../components/Header';
 
 import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
-  // const { session } = useAuthStore();
+  const { session } = useAuthStore();
   const navigate = useNavigate();
 
   const handleGameClick = (gameName: string) => {
@@ -13,7 +13,7 @@ const MainPage = () => {
 
   return (
     <div>
-      {/* <Header signIn={!!session} /> */}
+      <Header signIn={!!session} />
 
       <div className="flex items-center justify-center mt-[87px] flex-col gap-[16px] px-[20px]">
         <div className="flex gap-[16px]">
