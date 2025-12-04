@@ -16,6 +16,7 @@
     "vite": "^6.1.0"
   },
   "dependencies": {
+    "@bini-game-town/shared": "workspace:*",
     "gsap": "^3.12.7",
     "pixi.js": "^8.8.0"
   }
