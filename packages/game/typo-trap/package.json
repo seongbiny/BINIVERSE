@@ -14,6 +14,7 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
+    "@bini-game-town/shared": "workspace:*",
     "lottie-web": "^5.13.0",
     "pixi.js": "^8.9.2"
   }

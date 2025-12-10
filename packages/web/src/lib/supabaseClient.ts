@@ -1,10 +1,2 @@
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Supabase URL and Anon Key must be defined in the environment variables');
-}
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// web 앱에서는 shared 패키지의 공용 supabase 클라이언트를 그대로 사용
+export { supabase } from '@bini-game-town/shared';
