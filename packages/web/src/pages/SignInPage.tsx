@@ -1,4 +1,4 @@
-import Header from '../components/Header';
+import Header from '../components/header/Header';
 import { supabase } from '../lib/supabaseClient';
 import { useState } from 'react';
 

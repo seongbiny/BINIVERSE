@@ -1,5 +1,5 @@
 import { useAuthStore } from '../stores/authStore';
-import Header from '../components/Header';
+import Header from '../components/header/Header';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ const MainPage = () => {
 
   return (
     <div>
-      <Header signIn={!!session} />
+      <Header isSignedIn={!!session} />
 
       <div className="flex items-center justify-center mt-[87px] flex-col gap-[16px] px-[20px]">
         <div className="flex gap-[16px]">
