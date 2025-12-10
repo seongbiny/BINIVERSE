@@ -6,7 +6,7 @@ interface HeaderProps {
 
 const Header = ({ isSignedIn = false }: HeaderProps) => {
   return (
-    <div className="flex justify-between items-center px-[20px] py-[24px]">
+    <div className="flex justify-between items-center px-[40px] py-[24px]">
       <img src="/logo2.png" style={{ width: '105px', height: '24px' }} />
       <HeaderActions isSignedIn={isSignedIn} />
     </div>
