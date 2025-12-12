@@ -1,5 +1,5 @@
-import { gamesById, type GameId } from '@/config/games';
-import { useNavigate } from 'react-router-dom';
+import { gamesById, type GameId } from "@/config/games";
+import { useNavigate } from "react-router-dom";
 
 interface PanelProps {
   selectedGame: GameId | null;
@@ -19,7 +19,7 @@ const Panel = ({ selectedGame, isOpen }: PanelProps) => {
       className={`
       w-[627px] p-[16px] rounded-[32px] border border-[#4A5256] bg-[#1B1B1B]
       transform transition-transform duration-300 ease-out
-      ${isOpen ? 'translate-x-0' : 'translate-x-full'}
+      ${isOpen ? "translate-x-0" : "translate-x-full"}
     `}
       onClick={(e) => e.stopPropagation()}
     >
@@ -34,12 +34,20 @@ const Panel = ({ selectedGame, isOpen }: PanelProps) => {
 
             <div className="flex flex-col gap-[40px]">
               <div className="flex items-center gap-[8px]">
-                <h2 className="text-[30px] text-white font-bold">{game.title}</h2>
-                <img src={game.icon} alt={`${game.title} icon`} className="w-[48px] h-[48px]" />
+                <h2 className="text-[30px] text-white font-bold">
+                  {game.title}
+                </h2>
+                <img
+                  src={game.icon}
+                  alt={`${game.title} icon`}
+                  className="w-[48px] h-[48px]"
+                />
               </div>
 
               <div className="flex flex-col gap-[16px]">
-                <h3 className="text-[28px] text-[#ffffff] font-semibold">About</h3>
+                <h3 className="text-[28px] text-[#ffffff] font-semibold">
+                  About
+                </h3>
                 <p className="text-[14px] text-[#B3B3B3]">{game.description}</p>
               </div>
             </div>
