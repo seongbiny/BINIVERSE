@@ -33,10 +33,10 @@ const MainPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen flex flex-col">
       <Header isSignedIn={!!session} />
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden relative">
         <div className="flex-1" onClick={handleClose}>
           <div className="px-[40px] pt-[56px]">
             <h1 className="text-[30px] text-[#F1F4F6] font-medium px-[8px] mb-[48px]">Games</h1>
