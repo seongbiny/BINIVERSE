@@ -1,14 +1,14 @@
-import { useAuthStore } from '../stores/authStore';
-import Header from '../components/header/Header';
-import BiniPuzzleLogo from '@/assets/image/biniPuzzleLogo.svg';
-import flappyPlaneLogo from '@/assets/image/flappyPlaneLogo.svg';
-import typoTrapLogo from '@/assets/image/typoTrapLogo.svg';
+import { useAuthStore } from "../stores/authStore";
+import Header from "../components/header/Header";
+import BiniPuzzleLogo from "@/assets/image/biniPuzzleLogo.svg";
+import flappyPlaneLogo from "@/assets/image/flappyPlaneLogo.svg";
+import typoTrapLogo from "@/assets/image/typoTrapLogo.svg";
 
-import { useState } from 'react';
-import Panel from '@/components/panel/Panel';
-import type { GameId } from '@/config/games';
+import { useState } from "react";
+import Panel from "@/components/panel/Panel";
+import type { GameId } from "@/config/games";
 
-import { motion, LayoutGroup } from 'framer-motion';
+import { motion, LayoutGroup } from "framer-motion";
 
 const MainPage = () => {
   const { session } = useAuthStore();
@@ -17,9 +17,11 @@ const MainPage = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   // 크기 전환: flex-basis + transition
-  const imageSizeClass = isOpen ? 'basis-[189px] h-[189px]' : 'basis-[441px] h-[441px]';
+  const imageSizeClass = isOpen
+    ? "basis-[189px] h-[189px]"
+    : "basis-[441px] h-[441px]";
   const imageFadeClass = (gameId: GameId) =>
-    selectedGame && selectedGame !== gameId ? 'opacity-50' : 'opacity-100';
+    selectedGame && selectedGame !== gameId ? "opacity-50" : "opacity-100";
 
   const handleGameSelect = (gameName: GameId) => {
     setSelectedGame(gameName);
@@ -39,7 +41,9 @@ const MainPage = () => {
       <div className="flex flex-1 overflow-hidden relative">
         <div className="flex-1" onClick={handleClose}>
           <div className="px-[40px] pt-[56px]">
-            <h1 className="text-[30px] text-[#F1F4F6] font-medium px-[8px] mb-[48px]">Games</h1>
+            <h1 className="text-[30px] text-[#F1F4F6] font-medium px-[8px] mb-[48px]">
+              Games
+            </h1>
 
             <LayoutGroup>
               <div className="flex flex-wrap gap-[24px]">
@@ -49,12 +53,12 @@ const MainPage = () => {
                   alt="Bini Puzzle"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleGameSelect('bini-puzzle');
+                    handleGameSelect("bini-puzzle");
                   }}
                   className={`
-                  cursor-pointer
+                  cursor-pointer transition-opacity hover:opacity-100
                   ${imageSizeClass}
-                  ${imageFadeClass('bini-puzzle')}
+                  ${imageFadeClass("bini-puzzle")}
                 `}
                 />
                 <motion.img
@@ -63,12 +67,12 @@ const MainPage = () => {
                   alt="Flappy Plane"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleGameSelect('flappy-plane');
+                    handleGameSelect("flappy-plane");
                   }}
                   className={`
-                cursor-pointer
+                cursor-pointer transition-opacity hover:opacity-100
                   ${imageSizeClass}
-                  ${imageFadeClass('flappy-plane')}
+                  ${imageFadeClass("flappy-plane")}
                 `}
                 />
                 <motion.img
@@ -77,12 +81,12 @@ const MainPage = () => {
                   alt="Typo Trap"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleGameSelect('typo-trap');
+                    handleGameSelect("typo-trap");
                   }}
                   className={`
-                cursor-pointer
+                cursor-pointer transition-opacity hover:opacity-100
                   ${imageSizeClass}
-                  ${imageFadeClass('typo-trap')}
+                  ${imageFadeClass("typo-trap")}
                 `}
                 />
               </div>
