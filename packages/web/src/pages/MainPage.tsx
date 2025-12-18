@@ -4,11 +4,12 @@ import BiniPuzzleLogo from "@/assets/image/biniPuzzleLogo.svg";
 import flappyPlaneLogo from "@/assets/image/flappyPlaneLogo.svg";
 import typoTrapLogo from "@/assets/image/typoTrapLogo.svg";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Panel from "@/components/panel/Panel";
 import type { GameId } from "@/config/games";
 
 import { motion, LayoutGroup } from "framer-motion";
+import { supabase } from "@bini-game-town/shared";
 
 const MainPage = () => {
   const { session } = useAuthStore();
@@ -33,6 +34,14 @@ const MainPage = () => {
     setIsOpen(false); // 닫기 애니메이션 시작
     setTimeout(() => setSelectedGame(null), 300); // 전환 후 언마운트
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      console.log("User ID:", data.user?.id);
+    };
+    fetchUser();
+  }, []);
 
   return (
     <div className="h-screen flex flex-col">

@@ -1,14 +1,14 @@
-import { Engine, Runner, Composite, Events, Body } from 'matter-js';
-import { Player } from '../component/view/Player';
-import { Ground } from '../component/view/Ground';
-import { DEFAULT_CONFIG } from '../../config';
-import { ObstacleManager } from '../component/view/ObstacleManager';
-import { EventEmitter } from 'pixi.js';
-import SceneController from './SceneController';
-import { SceneType } from '../types';
-import { ScoreManager } from '../component/view/ScoreManager';
-import { SoundPlayer } from './SoundPlayer';
-import { submitGameResult } from '../manager/gameRecordService';
+import { Engine, Runner, Composite, Events, Body } from "matter-js";
+import { Player } from "../component/view/Player";
+import { Ground } from "../component/view/Ground";
+import { DEFAULT_CONFIG } from "../../config";
+import { ObstacleManager } from "../component/view/ObstacleManager";
+import { EventEmitter } from "pixi.js";
+import SceneController from "./SceneController";
+import { SceneType } from "../types";
+import { ScoreManager } from "../component/view/ScoreManager";
+import { SoundPlayer } from "./SoundPlayer";
+import { submitGameResult } from "@bini-game-town/shared";
 
 const { GAME_WIDTH } = DEFAULT_CONFIG;
 export class GameController extends EventEmitter {
@@ -63,7 +63,7 @@ export class GameController extends EventEmitter {
   }
 
   private setupCollisionEvents(): void {
-    Events.on(this.engine, 'collisionStart', (event) => {
+    Events.on(this.engine, "collisionStart", (event) => {
       if (this.isGameOver) return;
 
       const pairs = event.pairs;
@@ -72,12 +72,12 @@ export class GameController extends EventEmitter {
         const pair = pairs[i];
 
         if (this.isPlayerGroundCollision(pair.bodyA, pair.bodyB)) {
-          console.log('충돌: 플레이어와 지면');
+          console.log("충돌: 플레이어와 지면");
           this.handleGameOver();
         }
 
         if (this.isPlayerObstacleCollision(pair.bodyA, pair.bodyB)) {
-          console.log('충돌: 플레이어와 장애물');
+          console.log("충돌: 플레이어와 장애물");
           this.handleGameOver();
         }
       }
@@ -93,12 +93,12 @@ export class GameController extends EventEmitter {
       this.player.die();
     }
 
-    this.soundPlayer.play('gameover');
+    this.soundPlayer.play("gameover");
 
     const currentScore = this.scoreManager.getScore();
-    this.emit('gameOver', currentScore);
+    this.emit("gameOver", currentScore);
 
-    submitGameResult(currentScore);
+    submitGameResult("flappy-plane", currentScore);
 
     // 점수가 초기화되지 않고 유지된 상태로 GameOverScene 전환
     setTimeout(() => {
@@ -111,7 +111,7 @@ export class GameController extends EventEmitter {
     this.isGameOver = false;
 
     if (this.ground) {
-      console.log('ground reset');
+      console.log("ground reset");
     }
 
     // 게임을 재시작할 때만 점수 초기화
@@ -148,18 +148,19 @@ export class GameController extends EventEmitter {
   // 플레이어와 지면 충돌 확인
   private isPlayerGroundCollision(bodyA: Body, bodyB: Body): boolean {
     return (
-      (bodyA.label === 'player' && bodyB.label === 'ground') ||
-      (bodyB.label === 'player' && bodyA.label === 'ground')
+      (bodyA.label === "player" && bodyB.label === "ground") ||
+      (bodyB.label === "player" && bodyA.label === "ground")
     );
   }
 
   // 플레이어와 장애물 충돌 확인
   private isPlayerObstacleCollision(bodyA: Body, bodyB: Body): boolean {
     return (
-      (bodyA.label === 'player' &&
-        (bodyB.label === 'obstacle-top' || bodyB.label === 'obstacle-bottom')) ||
-      (bodyB.label === 'player' &&
-        (bodyA.label === 'obstacle-top' || bodyA.label === 'obstacle-bottom'))
+      (bodyA.label === "player" &&
+        (bodyB.label === "obstacle-top" ||
+          bodyB.label === "obstacle-bottom")) ||
+      (bodyB.label === "player" &&
+        (bodyA.label === "obstacle-top" || bodyA.label === "obstacle-bottom"))
     );
   }
 
@@ -173,10 +174,11 @@ export class GameController extends EventEmitter {
     for (const obstacle of obstacles) {
       if (obstacle.isActive() && !obstacle.isPassed()) {
         // 통과 감지 지점을 장애물 좌측 가장자리로 설정 (파이프 중간이 아님)
-        const passPoint = obstacle.getCenterX() - (obstacle.getWidth() / 2) * 0.5;
+        const passPoint =
+          obstacle.getCenterX() - (obstacle.getWidth() / 2) * 0.5;
 
         if (playerX > passPoint) {
-          this.soundPlayer.play('pass');
+          this.soundPlayer.play("pass");
           obstacle.setPassed(true);
           this.scoreManager.incrementScore();
         }

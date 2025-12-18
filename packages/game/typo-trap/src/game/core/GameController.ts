@@ -1,5 +1,5 @@
-import { submitGameResult } from '../component/manager/gameRecordService';
-import { GAME_CONFIG, PlayingState } from '../types';
+import { submitGameResult } from "@bini-game-town/shared";
+import { GAME_CONFIG, PlayingState } from "../types";
 
 export interface GameEventCallbacks {
   onStateChange: (state: PlayingState, data?: any) => void;
@@ -43,7 +43,10 @@ export class GameController {
     // 배열 내용을 완전히 교체
     this.CORRECT_POSITIONS.length = 0; // 기존 배열 비우기
     this.CORRECT_POSITIONS.push(...positions); // 새로운 내용 추가
-    console.log('🎯 GameController 정답 위치 업데이트:', this.CORRECT_POSITIONS);
+    console.log(
+      "🎯 GameController 정답 위치 업데이트:",
+      this.CORRECT_POSITIONS
+    );
   }
 
   public startNewGame(): void {
@@ -74,10 +77,12 @@ export class GameController {
       this.handleSuccess();
     } else {
       this.gameState = PlayingState.WRONG;
-      submitGameResult(this.currentStage);
+      const clearedMaxStage = Math.max(0, this.currentStage - 1);
+
+      submitGameResult("typo-trap", clearedMaxStage);
       this.callbacks?.onStateChange(PlayingState.WRONG, {
-        topMessage: '앗, 아쉬워요\n정답이 아니에요',
-        buttonText: '다시 도전하기',
+        topMessage: "앗, 아쉬워요\n정답이 아니에요",
+        buttonText: "다시 도전하기",
         buttonColor: 0x666666,
         selectedPosition: { row, col },
         correctPosition: correctPos,
@@ -89,7 +94,7 @@ export class GameController {
     const isLastStage = this.currentStage >= GAME_CONFIG.STAGE_COUNT;
 
     const resultData = {
-      stage: 'success_message',
+      stage: "success_message",
       message: `${this.currentStage}단계 성공!`,
       currentStage: this.currentStage,
       isLastStage: isLastStage,
@@ -99,10 +104,10 @@ export class GameController {
 
     if (isLastStage) {
       // 5단계(마지막 단계) 성공 시 1초 후 ResultScene으로 자동 전환
-      submitGameResult(this.currentStage);
+      submitGameResult("typo-trap", this.currentStage);
       setTimeout(() => {
         this.callbacks?.onStateChange(this.gameState, {
-          stage: 'final_complete',
+          stage: "final_complete",
           shouldTransitionToResult: true,
         });
       }, 1000);
@@ -118,7 +123,7 @@ export class GameController {
     if (this.currentStage < GAME_CONFIG.STAGE_COUNT) {
       const nextStage = this.currentStage + 1;
       const resultData = {
-        stage: 'next_stage_confirm',
+        stage: "next_stage_confirm",
         topMessage: `${nextStage}단계도 바로\n도전해 볼까요?`, // 상단 메시지
         buttonText: `${nextStage}단계 도전하기`,
         buttonColor: 0x353739,
@@ -133,12 +138,12 @@ export class GameController {
   private handleTimeOut(): void {
     this.gameState = PlayingState.TIMEOUT;
 
-    submitGameResult(this.currentStage);
+    submitGameResult("typo-trap", Math.max(0, this.currentStage - 1));
 
     const resultData = {
-      stage: 'timeout',
-      topMessage: '앗, 아쉬워요\n시간이 끝났어요',
-      buttonText: '다시 도전하기',
+      stage: "timeout",
+      topMessage: "앗, 아쉬워요\n시간이 끝났어요",
+      buttonText: "다시 도전하기",
       buttonColor: 0xff9800,
       canProceed: false,
     };
@@ -157,7 +162,7 @@ export class GameController {
       return true;
     } else {
       // 모든 단계 완료
-      console.log('🎉 All stages completed!');
+      console.log("🎉 All stages completed!");
       return false; // ResultScene으로 전환 신호
     }
   }
@@ -188,7 +193,7 @@ export class GameController {
   }
 
   public cleanup(): void {
-    console.log('🧹 GameController cleanup started');
+    console.log("🧹 GameController cleanup started");
 
     this.stopTimer();
 
@@ -201,7 +206,7 @@ export class GameController {
     // 콜백 제거는 하지 않음 (씬이 다시 사용될 수 있으므로)
     // this.callbacks = null;
 
-    console.log('✅ GameController cleanup complete');
+    console.log("✅ GameController cleanup complete");
   }
 
   public getCurrentStage(): number {
